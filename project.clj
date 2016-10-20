@@ -6,7 +6,8 @@
                  [re-frame "0.8.0"]
                  [garden "1.3.2"]]
 
-  :plugins [[lein-figwheel "0.5.8"]]
+  :plugins [[lein-figwheel "0.5.8"]
+            [lein-cljsbuild "1.1.4"]]
 
   :figwheel {:server-port 3333
              :reload-clj-files {:clj false
@@ -16,6 +17,14 @@
                         :source-paths ["src"]
                         :figwheel {:on-jsload "turtle.core/reload"}
                         :compiler {:main "turtle.core"
-                                   :asset-path "js/out"
-                                   :output-to "resources/public/js/turtle.js"
-                                   :output-dir "resources/public/js/out"}}]})
+                                   :asset-path "js/dev/out"
+                                   :output-to "resources/public/js/dev/turtle.js"
+                                   :output-dir "resources/public/js/dev/out"}}
+                       {:id "prod"
+                        :source-paths ["src"]
+                        :compiler {:main "turtle.core"
+                                   :asset-path "/js/prod/out"
+                                   :output-to "resources/public/js/prod/out/turtle.js"
+                                   :output-dir "resources/public/js/prod/out"
+                                   :optimizations :advanced
+                                   :pretty-print false}}]})
