@@ -23,7 +23,7 @@
                        {:id "prod"
                         :source-paths ["src"]
                         :compiler {:main "turtle.core"
-                                   :asset-path "/js/prod/out"
+                                   :asset-path "./js/prod/out"
                                    :output-to "resources/public/js/prod/turtle.js"
                                    :output-dir "resources/public/js/prod/out"
                                    :optimizations :simple
