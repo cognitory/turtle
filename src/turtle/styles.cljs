@@ -4,8 +4,7 @@
 (defn main-styles []
   [:body
    {:margin 0
-    :padding 0
-    :font-family "\"Open Sans\", Helvetica, Arial, sans-serif"}
+    :padding 0}
 
    [:#app
     {:background "#eee"}
