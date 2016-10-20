@@ -24,6 +24,7 @@
 
      [:.editor
       {:width "40%"
+       :flex-grow 1
        :overflow "hidden"
        :position "relative"}
 
@@ -39,7 +40,7 @@
         :box-sizing "border-box"}]]
 
      [:.output
-      {:width "40%"
+      {:width "400px"
        :background "#ccc"
        :overflow "hidden"}]]]])
 
