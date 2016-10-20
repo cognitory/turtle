@@ -2,16 +2,23 @@
   (:require
     [reagent.core :as r]
     [turtle.styles :refer [styles-view]]
+    [turtle.eval :refer [eval-code]]
     [quil.core :as q :include-macros true]
     [clojure-turtle.core :as t]))
 
 (defn editor-view []
   [:div.editor {:on-click (fn []
-                            (t/home)
-                            (t/clean)
-                            (t/forward 30))}
-   (str '(testing))
-   ])
+                            (eval-code
+                               ["(ns turtle.draw
+                                 (:require
+                                 [clojure-turtle.core :as t]
+                                 ))"
+
+                               "(t/home)
+                               (t/clean)
+                               (t/forward (rand-int 50))"]
+))}
+   (str '(testing))])
 
 (def commands
   ['(forward 30)
