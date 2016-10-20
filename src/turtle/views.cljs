@@ -35,22 +35,22 @@
 
 (def commands
   [(symbol "; commands")
-   '(forward 30)
-   '(back 30)
-   '(right 90)
-   '(left 90)
-   '(repeat 3
-            (all ...))
-   '(penup)
-   '(pendown)
-   '(setxy)
-   '(setheading)
-   '(clean)
-   '(home)
-   '(color)
-   '(start-fill)
-   '(end-fill)
-   '(wait)])
+   '(t/forward 30)
+   '(t/back 30)
+   '(t/right 90)
+   '(t/left 90)
+   '(t/repeat 3
+            (t/all ...))
+   '(t/penup)
+   '(t/pendown)
+   '(t/setxy 0 0)
+   '(t/setheading 90)
+   '(t/clean)
+   '(t/home)
+   '(t/color [0 0 255])
+   '(t/start-fill)
+   '(t/end-fill)
+   '(t/wait 1000)])
 
 (defn command-list-view []
   (into
