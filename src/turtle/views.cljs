@@ -8,6 +8,13 @@
 
 (def editor (atom nil))
 
+(defn eval-from-editor! []
+  (eval-code
+    ["(ns turtle.draw
+     (:require
+     [clojure-turtle.core :as t]))"
+     (.getValue @editor)]))
+
 (defn editor-view []
   (r/create-class
     {:component-did-mount
@@ -18,13 +25,12 @@
                                                :mode "clojure" }))))
      :reagent-render
      (fn []
-       [:div.editor
+       [:div.editor {:on-key-down (fn [e]
+                                   (when (and e.ctrlKey (= 13 e.keyCode))
+                                     (eval-from-editor!)))}
         [:button {:on-click (fn []
-                              (eval-code
-                                ["(ns turtle.draw
-                                 (:require
-                                 [clojure-turtle.core :as t]))"
-                                 (.getValue @editor)]))} "RUN"]
+                              (eval-from-editor!))}
+         "RUN"]
         [:div {:id "editor"}]])}))
 
 (def commands
