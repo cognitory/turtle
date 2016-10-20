@@ -58,20 +58,23 @@
     (for [command commands]
       [:div (str command)])))
 
+(q/defsketch sketch
+  :host "turtle-canvas"
+  :no-start true
+  :setup t/setup
+  :draw t/draw
+  :size [400 400])
+
 (defn output-view []
   (r/create-class
     {:component-did-mount
      (fn []
-       (q/defsketch example
-         :host "turtle-canvas"
-         :setup t/setup
-         :draw t/draw
-         :size [400 400]))
+       (sketch))
 
      :reagent-render
      (fn []
        [:div.output
-        [:canvas {:id "turtle-canvas"}]]    )}))
+        [:canvas {:id "turtle-canvas"}]])}))
 
 (defn app-view []
   [:div.app
