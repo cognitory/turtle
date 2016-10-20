@@ -6,28 +6,35 @@
     [quil.core :as q :include-macros true]
     [clojure-turtle.core :as t]))
 
-(defn editor-view []
-  [:div.editor {:on-click (fn []
-                            (eval-code
-                               ["(ns turtle.draw
-                                 (:require
-                                 [clojure-turtle.core :as t]
-                                 ))"
+(def editor (atom nil))
 
-                               "(t/home)
-                               (t/clean)
-                               (t/forward (rand-int 50))"]
-))}
-   (str '(testing))])
+(defn editor-view []
+  (r/create-class
+    {:component-did-mount
+     (fn []
+       (reset! editor (js/CodeMirror (.. js/document (getElementById "editor"))
+                                     (clj->js {:value "(t/home)\n(t/clean)\n(t/forward (rand-int 50))"
+                                               :theme "railscasts"
+                                               :mode "clojure" }))))
+     :reagent-render
+     (fn []
+       [:div.editor
+        [:button {:on-click (fn []
+                              (eval-code
+                                ["(ns turtle.draw
+                                 (:require
+                                 [clojure-turtle.core :as t]))"
+                                 (.getValue @editor)]))} "RUN"]
+        [:div {:id "editor"}]])}))
 
 (def commands
-  ['(forward 30)
+  [(symbol "; commands")
+   '(forward 30)
    '(back 30)
    '(right 90)
    '(left 90)
-   '(repeat 3 (all
-                (forward 1)
-                (right 1)))
+   '(repeat 3
+            (all ...))
    '(penup)
    '(pendown)
    '(setxy)
@@ -41,7 +48,7 @@
 
 (defn command-list-view []
   (into
-    [ :div.command-list]
+    [:div.command-list]
     (for [command commands]
       [:div (str command)])))
 

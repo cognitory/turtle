@@ -11,24 +11,37 @@
     {:background "#eee"}
 
     [:.app
-     {:display "flex"}
+     {:display "flex"
+      :height "100vh"}
 
      [:.command-list
       {:font-family "monospace"
-       :width "10em"
-       :padding "1em"}]
-
-     [:.editor
-      {:width "20em"
        :background "black"
        :color "white"
-       :font-family "monospace"
-       :padding "1em"}]
+       :width "20%"
+       :padding "1em"
+       :overflow "hidden"}]
+
+     [:.editor
+      {:width "40%"
+       :overflow "hidden"
+       :position "relative"}
+
+      [:button
+       {:position "absolute"
+        :top "1em"
+        :right "1em"
+        :z-index 1000}]
+
+      [:.CodeMirror
+       {:padding "1em"
+        :height "100vh"
+        :box-sizing "border-box"}]]
 
      [:.output
-      {:width "10em"
-       :flex-grow "1"
-       :background "#ccc"}]]]])
+      {:width "40%"
+       :background "#ccc"
+       :overflow "hidden"}]]]])
 
 (defn styles-view []
   [:style
