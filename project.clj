@@ -24,7 +24,7 @@
                         :source-paths ["src"]
                         :compiler {:main "turtle.core"
                                    :asset-path "/js/prod/out"
-                                   :output-to "resources/public/js/prod/out/turtle.js"
+                                   :output-to "resources/public/js/prod/turtle.js"
                                    :output-dir "resources/public/js/prod/out"
-                                   :optimizations :advanced
+                                   :optimizations :simple
                                    :pretty-print false}}]})
