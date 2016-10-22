@@ -26,6 +26,7 @@
                                           :mode "clojure"
                                           :extraKeys {"Tab" better-tab}
                                           :autofocus true
+                                          :matchBrackets true
                                           :value @code}))]
            (.on editor "change" (fn [editor]
                                    (dispatch [:update-code (.getValue editor)])))))
