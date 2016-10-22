@@ -58,10 +58,17 @@
    '(t/wait 1000)])
 
 (defn command-list-view []
-  (into
-    [:div.command-list]
-    (for [command commands]
-      [:div (str command)])))
+  (r/create-class
+    {:component-did-mount
+     (fn []
+       (let [editor (js/CodeMirror (.. js/document (getElementById "command-list"))
+                                   (clj->js {:theme "railscasts"
+                                             :mode "clojure"
+                                             :readOnly true
+                                             :value (clojure.string/join "\n" commands)}))]))
+     :reagent-render
+     (fn []
+       [:div {:id "command-list"}])}))
 
 (q/defsketch sketch
   :host "turtle-canvas"

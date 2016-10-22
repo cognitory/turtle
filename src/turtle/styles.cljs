@@ -1,6 +1,11 @@
 (ns turtle.styles
   (:require [garden.core :refer [css]]))
 
+(defn code-area []
+  {:padding "1em"
+   :height "100vh"
+   :box-sizing "border-box"})
+
 (defn main-styles []
   [:body
    {:margin 0
@@ -13,13 +18,11 @@
      {:display "flex"
       :height "100vh"}
 
-     [:.command-list
-      {:font-family "monospace"
-       :background "black"
-       :color "white"
-       :width "20%"
-       :padding "1em"
-       :overflow "hidden"}]
+     [:#command-list
+      {:width "20%"
+       :overflow "hidden"}
+      [:.CodeMirror
+       (code-area)]]
 
      [:.editor
       {:width "40%"
@@ -34,9 +37,8 @@
         :z-index 1000}]
 
       [:.CodeMirror
-       {:padding "1em"
-        :height "100vh"
-        :box-sizing "border-box"}]]
+       (code-area)
+       {:background "black"}]]
 
      [:.output
       {:width "400px"
