@@ -63,11 +63,11 @@
   (r/create-class
     {:component-did-mount
      (fn []
-       (let [editor (js/CodeMirror (.. js/document (getElementById "command-list"))
-                                   (clj->js {:theme "railscasts"
-                                             :mode "clojure"
-                                             :readOnly true
-                                             :value (clojure.string/join "\n" commands)}))]))
+       (js/CodeMirror (.. js/document (getElementById "command-list"))
+                      (clj->js {:theme "railscasts"
+                                :mode "clojure"
+                                :readOnly true
+                                :value (clojure.string/join "\n" commands)})))
      :reagent-render
      (fn []
        [:div {:id "command-list"}])}))
