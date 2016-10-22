@@ -21,15 +21,15 @@
     (r/create-class
       {:component-did-mount
        (fn []
-         (let [editor (js/CodeMirror (.. js/document (getElementById "editor"))
-                                (clj->js {:theme "railscasts"
-                                          :mode "clojure"
-                                          :extraKeys {"Tab" better-tab}
-                                          :autofocus true
-                                          :matchBrackets true
-                                          :value @code}))]
-           (.on editor "change" (fn [editor]
-                                   (dispatch [:update-code (.getValue editor)])))))
+         (doto (js/CodeMirror (.. js/document (getElementById "editor"))
+                              (clj->js {:theme "railscasts"
+                                        :mode "clojure"
+                                        :extraKeys {"Tab" better-tab}
+                                        :autofocus true
+                                        :matchBrackets true
+                                        :value @code}))
+           (.on "change" (fn [editor]
+                           (dispatch [:update-code (.getValue editor)])))))
        :reagent-render
        (fn []
          [:div.editor {:on-key-down (fn [e]
