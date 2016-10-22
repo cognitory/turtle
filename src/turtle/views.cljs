@@ -1,37 +1,32 @@
 (ns turtle.views
   (:require
     [reagent.core :as r]
-    [re-frame.core :refer [subscribe]]
+    [re-frame.core :refer [subscribe dispatch]]
     [turtle.styles :refer [styles-view]]
-    [turtle.eval :refer [eval-code]]
     [quil.core :as q :include-macros true]
     [clojure-turtle.core :as t]))
 
 (def editor (atom nil))
-
-(defn eval-from-editor! []
-  (eval-code
-    ["(ns turtle.draw
-     (:require
-     [clojure-turtle.core :as t]))"
-     (.getValue @editor)]))
 
 (defn editor-view []
   (let [code (subscribe [:code])]
     (r/create-class
       {:component-did-mount
        (fn []
-         (reset! editor (js/CodeMirror (.. js/document (getElementById "editor"))
-                                       (clj->js {:value @code
-                                                  :theme "railscasts"
-                                                  :mode "clojure" }))))
+         (reset! editor
+                 (js/CodeMirror (.. js/document (getElementById "editor"))
+                                (clj->js {:theme "railscasts"
+                                          :mode "clojure"
+                                          :value @code})))
+         (.on @editor "change" (fn [editor]
+                                 (dispatch [:update-code (.getValue editor)]))))
        :reagent-render
        (fn []
          [:div.editor {:on-key-down (fn [e]
                                       (when (and e.ctrlKey (= 13 e.keyCode))
-                                        (eval-from-editor!)))}
+                                        (dispatch [:run-code])))}
           [:button {:on-click (fn []
-                                (eval-from-editor!))}
+                                (dispatch [:run-code]))}
            "RUN"]
           [:div {:id "editor"}]])})))
 
