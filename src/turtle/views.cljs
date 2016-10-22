@@ -25,6 +25,7 @@
                                 (clj->js {:theme "railscasts"
                                           :mode "clojure"
                                           :extraKeys {"Tab" better-tab}
+                                          :autofocus true
                                           :value @code}))]
            (.on editor "change" (fn [editor]
                                    (dispatch [:update-code (.getValue editor)])))))
