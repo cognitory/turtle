@@ -6,8 +6,6 @@
     [quil.core :as q :include-macros true]
     [clojure-turtle.core :as t]))
 
-(def editor (atom nil))
-
 (defn better-tab [cm]
   ; based on https://github.com/codemirror/CodeMirror/issues/988#issuecomment-14921785
   (if (.somethingSelected cm)
@@ -23,14 +21,13 @@
     (r/create-class
       {:component-did-mount
        (fn []
-         (reset! editor
-                 (js/CodeMirror (.. js/document (getElementById "editor"))
+         (let [editor (js/CodeMirror (.. js/document (getElementById "editor"))
                                 (clj->js {:theme "railscasts"
                                           :mode "clojure"
                                           :extraKeys {"Tab" better-tab}
-                                          :value @code})))
-         (.on @editor "change" (fn [editor]
-                                 (dispatch [:update-code (.getValue editor)]))))
+                                          :value @code}))]
+           (.on editor "change" (fn [editor]
+                                   (dispatch [:update-code (.getValue editor)])))))
        :reagent-render
        (fn []
          [:div.editor {:on-key-down (fn [e]
