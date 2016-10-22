@@ -8,9 +8,26 @@
   :eval
   (fn [code]
     (eval-code
-      ["(ns turtle.draw
-       (:require
-       [clojure-turtle.core :as t :include-macros true]))"
+      [(str '(ns turtle.draw
+               (:require
+                 [clojure-turtle.core :as t :include-macros true])))
+       ; manually aliasing because :refer is not working with eval-str
+       (str '(do
+               (def forward t/forward)
+               (def back t/back)
+               (def right t/right)
+               (def left t/left)
+               (def repeat t/repeat)
+               (def penup t/penup)
+               (def pendown t/pendown)
+               (def setxy t/setxy)
+               (def setheading t/setheading)
+               (def clean t/clean)
+               (def home t/home)
+               (def color t/color)
+               (def start-fill t/start-fill)
+               (def end-fill t/end-fill)
+               (def wait t/wait)))
        code])))
 
 (reg-event-db
@@ -18,11 +35,11 @@
   (fn [_ _]
     {:code
      (string/join "\n"
-                  ['(t/home)
-                   '(t/clean)
+                  ['(home)
+                   '(clean)
                    '(dotimes [_ 10]
-                      (t/right (rand-int 100))
-                      (t/forward (rand-int 100)))])}))
+                      (right (rand-int 100))
+                      (forward (rand-int 100)))])}))
 
 (reg-event-db
   :update-code
