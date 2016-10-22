@@ -2,6 +2,8 @@
   (:require
     [re-frame.core :refer [dispatch-sync]]
     [reagent.core :as r]
+    [turtle.events]
+    [turtle.subs]
     [turtle.views :as views]))
 
 (enable-console-print!)
@@ -11,7 +13,7 @@
     (.. js/document (getElementById "app"))))
 
 (defn ^:export init []
-  #_(dispatch-sync [:init-state])
+  (dispatch-sync [:initialize])
   (render))
 
 (defn ^:export reload []
