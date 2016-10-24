@@ -41,13 +41,14 @@
           [:div {:id "editor"}]])})))
 
 (def commands
-  [(symbol "; commands")
+  [(symbol "; turtle functions")
+   ""
    '(forward 30)
    '(back 30)
    '(right 90)
    '(left 90)
-;   '(repeat 3
-;            (all ...))
+   #_(repeat 3
+             (all ...))
    '(penup)
    '(pendown)
    '(setxy 0 0)
@@ -57,8 +58,11 @@
    '(color [0 0 255])
    '(start-fill)
    '(end-fill)
-;   '(wait 1000)
-   ])
+   #_(wait 1000)
+   ""
+   (symbol "; clojure functions")
+   ""
+   '(dotimes [n 10] ...)])
 
 (defn command-list-view []
   (r/create-class
