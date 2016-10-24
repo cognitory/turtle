@@ -46,8 +46,8 @@
    '(back 30)
    '(right 90)
    '(left 90)
-   '(repeat 3
-            (all ...))
+;   '(repeat 3
+;            (all ...))
    '(penup)
    '(pendown)
    '(setxy 0 0)
@@ -57,7 +57,8 @@
    '(color [0 0 255])
    '(start-fill)
    '(end-fill)
-   '(wait 1000)])
+;   '(wait 1000)
+   ])
 
 (defn command-list-view []
   (r/create-class
