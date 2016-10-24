@@ -4,7 +4,8 @@
                  [org.clojure/clojurescript "1.9.227"]
                  [com.google/clojure-turtle "0.3.0-SNAPSHOT"]
                  [re-frame "0.8.0"]
-                 [garden "1.3.2"]]
+                 [garden "1.3.2"]
+                 [fipp "0.6.4"]]
 
   :plugins [[lein-figwheel "0.5.8"]
             [lein-cljsbuild "1.1.4"]]

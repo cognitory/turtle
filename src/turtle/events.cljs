@@ -2,7 +2,8 @@
   (:require
     [re-frame.core :refer [reg-fx reg-event-db reg-event-fx]]
     [clojure.string :as string]
-    [turtle.eval :refer [eval-code]]))
+    [turtle.eval :refer [eval-code]]
+    [fipp.clojure :as fipp]))
 
 (reg-fx
   :eval
@@ -34,12 +35,13 @@
   :initialize
   (fn [_ _]
     {:code
-     (string/join "\n"
-                  ['(home)
-                   '(clean)
-                   '(dotimes [_ 10]
-                      (right (rand-int 100))
-                      (forward (rand-int 100)))])}))
+     (->> ['(home)
+           '(clean)
+           '(dotimes [_ 10]
+              (right (rand-int 100))
+              (forward (rand-int 100)))]
+          (map #(with-out-str (fipp/pprint %1 {:width 40})))
+          (string/join ""))}))
 
 (reg-event-db
   :update-code
