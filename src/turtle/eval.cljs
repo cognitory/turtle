@@ -3,7 +3,7 @@
     [cljs.js :refer [empty-state eval-str js-eval]]
     [clojure.string :as string]))
 
-(defn eval-code [code]
+(defn eval-code [code callback]
   (eval-str (empty-state)
             (string/join "\n" code)
             'dummy-symbol
@@ -15,8 +15,4 @@
              :load (fn [name cb]
                      (cb {:lang :clj :source ""}))
              :context :statement}
-            (fn [{:keys [error value] :as x}]
-              (if error
-                (do
-                  (def *er x)
-                  (js/console.log (str error)))))))
+            callback))

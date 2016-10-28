@@ -1,6 +1,6 @@
 (ns turtle.events
   (:require
-    [re-frame.core :refer [reg-fx reg-event-db reg-event-fx]]
+    [re-frame.core :refer [reg-fx reg-event-db reg-event-fx dispatch]]
     [clojure.string :as string]
     [turtle.eval :refer [eval-code]]
     [fipp.clojure :as fipp]
@@ -12,6 +12,7 @@
     (eval-code
       [(str '(ns turtle.draw
                (:require
+                 [re-frame.core :as r]
                  [clojure-turtle.core :as t :include-macros true])))
        ; manually aliasing because :refer is not working with eval-str
        (str '(do
@@ -30,7 +31,19 @@
                (def start-fill t/start-fill)
                (def end-fill t/end-fill)
                #_(def wait t/wait)))
-       code])))
+       (str '(set! *print-fn*
+                   (fn [& args]
+                     (r/dispatch [:console-log args]))))
+       (str '(set! *print-err-fn*
+                   (fn [& args]
+                     (r/dispatch [:console-error args]))))
+       code
+       (str '(enable-console-print!))]
+      (fn [{:keys [error value] :as x}]
+        (if error
+          (do
+            (dispatch [:console-error error])
+            (js/console.error (str error))))))))
 
 (def sample-code
   (->> ['(home)
@@ -44,7 +57,8 @@
 (reg-event-fx
   :initialize
   (fn [_ _]
-    {:db {:code (let [encoded-code (.-hash js/window.location)]
+    {:db {:log []
+          :code (let [encoded-code (.-hash js/window.location)]
                   (if (not (string/blank? encoded-code))
                     (base64/decodeString (.substr encoded-code 1))
                     sample-code))}
@@ -59,9 +73,21 @@
 (reg-event-fx
   :run-code
   (fn [{state :db}]
-    {:eval (state :code)}))
+    {:db (assoc state :log [])
+     :eval (state :code)}))
 
 (reg-event-fx
   :store-in-url
   (fn [_ [_ code]]
     (js/history.replaceState nil "" (str "#" (base64/encodeString code)))))
+
+(reg-event-db
+  :console-log
+  (fn [state [_ args]]
+    (update state :log conj {:log args})))
+
+(reg-event-db
+  :console-error
+  (fn [state [_ error]]
+    (update state :log conj {:error error})))
+

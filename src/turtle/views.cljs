@@ -15,6 +15,16 @@
                        "end"
                        "+input")))
 
+(defn console-view []
+  (let [logs (subscribe [:log])]
+    (fn []
+      (into [:div.console]
+            (for [log @logs]
+              (cond
+                (log :error) [:div.error.message
+                              (.. (log :error) -cause -message)]
+                (log :log) [:div.log.message
+                            (log :log)]))))))
 
 (defn editor-view []
   (let [code (subscribe [:code])]
@@ -38,6 +48,7 @@
           [:button {:on-click (fn []
                                 (dispatch [:run-code]))}
            "RUN"]
+          [console-view]
           [:div {:id "editor"}]])})))
 
 (def commands
@@ -84,7 +95,7 @@
   :draw t/draw
   :size [400 400])
 
-(defn output-view []
+(defn turtle-view []
   (r/create-class
     {:component-did-mount
      (fn []
@@ -92,7 +103,7 @@
 
      :reagent-render
      (fn []
-       [:div.output
+       [:div.turtle
         [:canvas {:id "turtle-canvas"}]])}))
 
 (defn app-view []
@@ -100,4 +111,4 @@
    [styles-view]
    [command-list-view]
    [editor-view]
-   [output-view]])
+   [turtle-view]])

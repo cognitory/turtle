@@ -6,3 +6,8 @@
   :code
   (fn [state]
     (state :code)))
+
+(reg-sub
+  :log
+  (fn [state]
+    (state :log)))

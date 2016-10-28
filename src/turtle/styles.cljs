@@ -21,6 +21,7 @@
      [:#command-list
       {:width "20%"
        :overflow "hidden"}
+
       [:.CodeMirror
        (code-area)]]
 
@@ -36,11 +37,33 @@
         :right "1em"
         :z-index 1000}]
 
+      [:.console
+       {:position "absolute"
+        :z-index 1000
+        :bottom "1em"
+        :right "1em"
+        :left "1em"
+        :overflow "scroll"
+        :max-height "20vh"}
+
+       [:.message
+        {:padding "0.5em"
+         :color "white"
+         :font-family "monospace"
+         :margin-top "2px"
+         :border-radius "2px"}
+
+        [:&.log
+         {:background "#424155"}]
+
+        [:&.error
+         {:background "#da4939"}]]]
+
       [:.CodeMirror
        (code-area)
        {:background "black"}]]
 
-     [:.output
+     [:.turtle
       {:width "400px"
        :background "#ccc"
        :overflow "hidden"}]]]])
