@@ -73,7 +73,9 @@
    ""
    (symbol "; clojure functions")
    ""
-   '(dotimes [n 10] ...)])
+   '(dotimes [n 10] ...)
+   '(print ...)
+   '(defn name [args] ...)])
 
 (defn command-list-view []
   (r/create-class
