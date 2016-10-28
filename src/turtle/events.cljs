@@ -32,7 +32,7 @@
                (def wait t/wait)))
        code])))
 
-(def placeholder-code
+(def sample-code
   (->> ['(home)
         '(clean)
         '(dotimes [_ 10]
@@ -47,8 +47,8 @@
     {:db {:code (let [encoded-code (.-hash js/window.location)]
                   (if (not (string/blank? encoded-code))
                     (base64/decodeString (.substr encoded-code 1))
-                    placeholder-code))}
-     :dispatch [:store-in-url placeholder-code]}))
+                    sample-code))}
+     :dispatch [:store-in-url sample-code]}))
 
 (reg-event-fx
   :update-code
