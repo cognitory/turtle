@@ -37,8 +37,7 @@
         '(clean)
         '(dotimes [_ 10]
            (right (rand-int 100))
-           (forward (rand-int 100))
-           (wait 1000))]
+           (forward (rand-int 100)))]
        (map #(with-out-str (fipp/pprint %1 {:width 40})))
        (string/join "")))
 
