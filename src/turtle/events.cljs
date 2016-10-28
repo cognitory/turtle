@@ -19,7 +19,7 @@
                (def back t/back)
                (def right t/right)
                (def left t/left)
-               (def repeat t/repeat)
+               #_(def repeat t/repeat)
                (def penup t/penup)
                (def pendown t/pendown)
                (def setxy t/setxy)
@@ -29,7 +29,7 @@
                (def color t/color)
                (def start-fill t/start-fill)
                (def end-fill t/end-fill)
-               (def wait t/wait)))
+               #_(def wait t/wait)))
        code])))
 
 (def sample-code
